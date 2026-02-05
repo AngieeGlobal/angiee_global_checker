@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Competitiveness Checker | Angiee Global</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy-mid: #1b2838;
+  --gold: #c9a227;
+  --gold-light: #e8d48b;
+  --cream: #faf8f3;
+  --slate: #415a77;
+  --red: #c0392b;
+  --red-bg: #fdf2f2;
+  --green: #27ae60;
+  --green-bg: #f0faf4;
+  --amber: #e67e22;
+  --amber-bg: #fef5ec;
+  --text: #1b2838;
+  --muted: #6b7b8d;
+  --border: #e2e0da;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  min-height:100vh;
+}
+
+/* ─── HERO ─── */
+.hero {
+  background:var(--navy);
+  position:relative;
+  overflow:hidden;
+  padding:50px 24px 60px;
+  text-align:center;
+}
+.hero::before {
+  content:'';
+  position:absolute;
+  top:-120px; right:-120px;
+  width:360px; height:360px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(201,162,39,.18) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero::after {
+  content:'';
+  position:absolute;
+  bottom:-80px; left:-80px;
+  width:280px; height:280px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(201,162,39,.12) 0%, transparent 70%);
+  pointer-events:none;
+}
+.brand {
+  position:relative; z-index:1;
+  display:inline-flex; align-items:center; gap:10px;
+  margin-bottom:28px;
+}
+.brand-icon {
+  width:38px; height:38px;
+  background:var(--gold);
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px;
+}
+.brand-name {
+  font-family:'Playfair Display',serif;
+  color:#fff; font-size:22px; font-weight:600; letter-spacing:.5px;
+}
+.brand-tag {
+  color:var(--gold); font-size:11px; font-weight:500;
+  letter-spacing:1.8px; text-transform:uppercase; margin-left:4px;
+}
+.hero h1 {
+  position:relative; z-index:1;
+  font-family:'Playfair Display',serif;
+  color:#fff; font-size:30px; font-weight:700; line-height:1.3;
+  max-width:620px; margin:0 auto 14px;
+}
+.hero h1 span { color:var(--gold); }
+.hero p {
+  position:relative; z-index:1;
+  color:rgba(255,255,255,.65); font-size:15px; max-width:520px; margin:0 auto 28px; line-height:1.6;
+}
+.hero-pills {
+  position:relative; z-index:1;
+  display:flex; flex-wrap:wrap; justify-content:center; gap:8px;
+}
+.pill {
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.8);
+  padding:6px 14px; border-radius:20px; font-size:13px;
+}
+
+/* ─── TRUST STRIP ─── */
+.trust-strip {
+  background:var(--navy-mid);
+  padding:16px 24px;
+  display:flex; flex-wrap:wrap; justify-content:center; gap:24px;
+}
+.trust-item {
+  color:rgba(255,255,255,.7);
+  font-size:13px; display:flex; align-items:center; gap:6px;
+}
+.trust-item svg { color:var(--gold); flex-shrink:0; }
+
+/* ─── WRAPPER ─── */
+.wrapper {
+  max-width:680px; margin:0 auto; padding:36px 22px;
+}
+
+/* ─── STEPS ─── */
+.step { display:none; animation:up .45s ease; }
+.step.active { display:block; }
+@keyframes up {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ─── PROGRESS ─── */
+.progress-track {
+  display:flex; gap:6px; margin-bottom:36px;
+}
+.prog-seg {
+  flex:1; height:4px; border-radius:2px;
+  background:var(--border);
+  transition:background .4s;
+}
+.prog-seg.done { background:var(--gold); }
+
+/* ─── QUESTION ─── */
+.q-label {
+  font-size:11px; font-weight:600; letter-spacing:1.6px;
+  text-transform:uppercase; color:var(--gold); margin-bottom:10px;
+}
+.q-title {
+  font-family:'Playfair Display',serif;
+  font-size:24px; font-weight:600; color:var(--navy); margin-bottom:8px; line-height:1.3;
+}
+.q-sub {
+  color:var(--muted); font-size:14px; margin-bottom:24px; line-height:1.55;
+}
+
+/* ─── CARDS ─── */
+.cards { display:flex; flex-direction:column; gap:10px; }
+.card {
+  border:2px solid var(--border);
+  border-radius:12px; padding:18px 20px;
+  cursor:pointer; transition:all .25s;
+  background:#fff; position:relative;
+}
+.card:hover { border-color:var(--gold); background:#fffdf5; }
+.card.sel {
+  border-color:var(--gold);
+  background:linear-gradient(135deg,#fffdf5,#fff8e0);
+  box-shadow:0 2px 12px rgba(201,162,39,.15);
+}
+.card.sel .card-check { opacity:1; }
+.card-check {
+  position:absolute; top:14px; right:16px;
+  width:22px; height:22px; border-radius:50%;
+  background:var(--gold); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; opacity:0; transition:.25s;
+  pointer-events:none;
+}
+.card-top { display:flex; align-items:center; gap:12px; pointer-events:none; }
+.card-emoji { font-size:22px; pointer-events:none; }
+.card-title { font-weight:600; font-size:15px; color:var(--navy); pointer-events:none; }
+.card-desc { color:var(--muted); font-size:13px; margin-top:4px; line-height:1.45; padding-left:34px; pointer-events:none; }
+
+/* ─── CHECKBOXES ─── */
+.checks { display:flex; flex-direction:column; gap:8px; }
+.chk-label {
+  display:flex; align-items:center; gap:12px;
+  border:2px solid var(--border);
+  border-radius:10px; padding:14px 16px;
+  cursor:pointer; transition:all .25s; background:#fff;
+}
+.chk-label:hover { border-color:var(--gold); background:#fffdf5; }
+.chk-label input { display:none; }
+.chk-label input:checked + .chk-box { background:var(--gold); border-color:var(--gold); }
+.chk-label input:checked ~ .chk-txt { color:var(--navy); font-weight:500; }
+.chk-box {
+  width:20px; height:20px; border-radius:5px;
+  border:2px solid var(--border); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; color:#fff; transition:.25s;
+}
+.chk-txt { font-size:14px; color:var(--muted); }
+
+/* ─── UPLOAD ─── */
+.upload-zone {
+  border:2px dashed var(--border);
+  border-radius:14px; padding:40px 20px;
+  text-align:center; cursor:pointer;
+  transition:all .3s; background:var(--cream);
+}
+.upload-zone:hover, .upload-zone.over {
+  border-color:var(--gold); background:#fffdf5;
+}
+.upload-icon { font-size:42px; margin-bottom:10px; }
+.upload-zone h3 { font-size:16px; color:var(--navy); margin-bottom:4px; }
+.upload-zone p { font-size:13px; color:var(--muted); }
+.upload-zone input { display:none; }
+.file-badge {
+  display:none; margin-top:14px; padding:10px 16px;
+  background:var(--green-bg); border:1px solid var(--green);
+  border-radius:8px; color:var(--green); font-size:13px;
+}
+
+/* ─── FIELDS ─── */
+.mt24 { margin-top:24px; }
+.field { margin-bottom:16px; }
+.field label { display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px; }
+.field input {
+  width:100%; padding:11px 14px;
+  border:2px solid var(--border); border-radius:8px;
+  font-size:14px; font-family:inherit; transition:.25s;
+}
+.field input:focus { outline:none; border-color:var(--gold); }
+
+/* ─── BUTTONS ─── */
+.btn {
+  display:block; width:100%; padding:14px;
+  border:none; border-radius:10px;
+  font-size:15px; font-weight:600; font-family:inherit;
+  cursor:pointer; transition:all .3s;
+}
+.btn-gold { background:var(--gold); color:#fff; box-shadow:0 3px 12px rgba(201,162,39,.3); }
+.btn-gold:hover { background:#b8941f; transform:translateY(-2px); }
+.btn-gold:disabled { background:#bdc3c7; cursor:not-allowed; }
+.btn-outline { background:transparent; border:2px solid var(--slate); color:var(--slate); }
+.btn-outline:hover { background:var(--slate); color:#fff; }
+
+/* ─── ANALYZE ─── */
+.analyze-screen { text-align:center; padding:40px 20px; }
+.spinner {
+  width:50px; height:50px; margin:0 auto 20px;
+  border:4px solid var(--border);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); }}
+.analyze-screen h2 { font-family:'Playfair Display',serif; font-size:22px; color:var(--navy); margin-bottom:6px; }
+.analyze-screen p { color:var(--muted); font-size:14px; margin-bottom:16px; }
+.a-bar {
+  width:100%; height:6px; background:var(--border);
+  border-radius:3px; overflow:hidden; margin:0 auto; max-width:300px;
+}
+.a-fill {
+  height:100%; background:var(--gold);
+  width:0; transition:width .6s;
+}
+
+/* ─── RESULTS ─── */
+.score-hero {
+  background:linear-gradient(135deg,var(--navy),#051b3d);
+  color:#fff; padding:32px; border-radius:14px;
+  text-align:center; margin-bottom:24px;
+}
+.score-hero h3 {
+  font-family:'Playfair Display',serif;
+  font-size:16px; margin-bottom:12px; opacity:.85;
+}
+.score-num {
+  font-size:64px; font-weight:700; line-height:1;
+  color:var(--gold); margin-bottom:12px;
+}
+.score-num span { font-size:24px; opacity:.7; color:#fff; }
+.score-verdict { font-size:14px; line-height:1.6; opacity:.9; }
+
+/* ─── SECTION SCORES ─── */
+.section-scores { margin-bottom:28px; }
+.section-scores h4 {
+  font-family:'Playfair Display',serif;
+  font-size:18px; color:var(--navy); margin-bottom:16px;
+}
+.s-row {
+  display:grid;
+  grid-template-columns:30px 1fr 100px 45px;
+  align-items:center; gap:10px; padding:10px 0;
+  border-bottom:1px solid var(--border);
+}
+.s-icon { font-size:18px; }
+.s-label { font-size:13px; color:var(--text); font-weight:500; }
+.s-bar-wrap { width:100%; }
+.s-bar {
+  width:100%; height:8px; background:var(--border);
+  border-radius:4px; overflow:hidden;
+}
+.s-fill {
+  height:100%; border-radius:4px; transition:width .6s;
+}
+.s-fill.bad { background:#e74c3c; }
+.s-fill.ok { background:#f39c12; }
+.s-fill.good { background:#27ae60; }
+.s-pct {
+  font-size:13px; font-weight:600; text-align:right;
+}
+.s-pct.bad { color:#e74c3c; }
+.s-pct.ok { color:#f39c12; }
+.s-pct.good { color:#27ae60; }
+
+/* ─── ISSUES ─── */
+.issues-list { margin-bottom:28px; }
+.issues-list h4 { font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:14px; }
+.issue {
+  background:var(--red-bg);
+  border-left:4px solid var(--red);
+  padding:14px; border-radius:8px; margin-bottom:10px;
+}
+.issue h5 { font-size:14px; color:var(--red); margin-bottom:4px; display:flex; align-items:center; gap:6px; }
+.issue p { font-size:13px; color:var(--muted); line-height:1.5; }
+
+/* ─── TESTIMONIALS ─── */
+.testimonials {
+  background:var(--green-bg);
+  border:2px solid var(--green);
+  border-radius:14px;
+  padding:24px;
+  margin:28px 0;
+}
+.testimonials h4 {
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  color:var(--green);
+  margin-bottom:16px;
+  text-align:center;
+}
+.testimonial-grid {
+  display:grid;
+  gap:16px;
+  margin-bottom:16px;
+}
+.testimonial {
+  background:#fff;
+  padding:16px;
+  border-radius:10px;
+  border-left:3px solid var(--green);
+}
+.testimonial-text {
+  font-size:13px;
+  color:var(--text);
+  line-height:1.6;
+  margin-bottom:10px;
+  font-style:italic;
+}
+.testimonial-author {
+  font-size:12px;
+  font-weight:600;
+  color:var(--green);
+}
+.testimonial-location {
+  font-size:11px;
+  color:var(--muted);
+  margin-left:4px;
+}
+.tiktok-cta {
+  text-align:center;
+  padding-top:16px;
+  border-top:1px solid rgba(39,174,96,0.2);
+}
+.tiktok-cta p {
+  font-size:13px;
+  color:var(--text);
+  margin-bottom:10px;
+}
+.tiktok-btn {
+  display:inline-block;
+  background:var(--green);
+  color:#fff;
+  padding:10px 20px;
+  border-radius:8px;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  transition:all .25s;
+}
+.tiktok-btn:hover {
+  background:#229954;
+  transform:translateY(-1px);
+}
+
+/* ─── UPSELL CARDS ─── */
+.upsell-section h4 {
+  font-family:'Playfair Display',serif;
+  font-size:20px; color:var(--navy); margin-bottom:6px;
+}
+.upsell-section > p { color:var(--muted); font-size:14px; margin-bottom:20px; }
+.upsell { border-radius:14px; overflow:hidden; margin-bottom:16px; border:2px solid var(--border); background:#fff; }
+.upsell.featured { border-color:var(--gold); }
+.upsell-badge {
+  background:var(--gold); color:#fff;
+  font-size:11px; font-weight:600; letter-spacing:1px;
+  text-transform:uppercase; padding:5px 14px; text-align:center;
+}
+.upsell-body { padding:20px; }
+.upsell-body h5 { font-size:17px; color:var(--navy); margin-bottom:6px; }
+.upsell-body .why { font-size:13px; color:var(--muted); margin-bottom:14px; line-height:1.5; }
+.upsell-features { list-style:none; margin-bottom:16px; }
+.upsell-features li {
+  font-size:13px; padding:5px 0; padding-left:22px;
+  position:relative; color:var(--text);
+}
+.upsell-features li::before {
+  content:'✓'; position:absolute; left:0;
+  color:var(--green); font-weight:700; font-size:12px;
+}
+.upsell-price { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.price-now { font-size:28px; font-weight:700; color:var(--navy); }
+.price-old { font-size:16px; color:var(--muted); text-decoration:line-through; }
+.btn-buy {
+  display:block; width:100%; padding:13px;
+  border:none; border-radius:8px;
+  font-size:15px; font-weight:600; font-family:inherit;
+  cursor:pointer; transition:all .25s;
+}
+.btn-buy.gold { background:var(--gold); color:#fff; box-shadow:0 3px 10px rgba(201,162,39,.3); }
+.btn-buy.gold:hover { background:#b8941f; }
+.btn-buy.outline { background:transparent; border:2px solid var(--slate); color:var(--slate); }
+.btn-buy.outline:hover { background:var(--slate); color:#fff; }
+
+/* ─── FREE LEADMAGNET ─── */
+.leadmagnet {
+  background:var(--amber-bg); border:1px solid var(--amber);
+  border-radius:12px; padding:20px; margin-top:24px;
+}
+.leadmagnet h5 { color:var(--amber); font-size:15px; margin-bottom:6px; }
+.leadmagnet p { color:var(--muted); font-size:13px; margin-bottom:12px; }
+.leadmagnet input {
+  width:100%; padding:10px 14px;
+  border:1px solid var(--border); border-radius:8px;
+  font-size:14px; margin-bottom:10px; font-family:inherit;
+}
+.leadmagnet input:focus { outline:none; border-color:var(--amber); }
+
+/* ─── FOOTER ─── */
+.footer {
+  text-align:center; padding:30px 20px;
+  color:var(--muted); font-size:12px; line-height:1.8;
+}
+
+/* ─── UTILITY ─── */
+.mt8 { margin-top:8px; }
+.mt16 { margin-top:16px; }
+.mt24 { margin-top:24px; }
+.text-center { text-align:center; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="brand">
+    <div class="brand-icon">🌍</div>
+    <div>
+      <div class="brand-name">Angiee Global</div>
+      <div class="brand-tag">Think Global · Compete Globally</div>
+    </div>
+  </div>
+  <h1>Why 75% of African CVs Get <span>Auto-Rejected</span>, and How to Be in the 25%</h1>
+  <p>Every day, talented Africans lose remote opportunities, not because they lack skills, but because their CVs, portfolios, and positioning say "local" when employers need "global." Find out where you stand in 60 seconds.</p>
+  <div class="hero-pills">
+    <div class="pill">✓ Zero-Experience Users Got Offers</div>
+    <div class="pill">✓ ATS-Optimized System</div>
+    <div class="pill">✓ Results in 30-45 Days</div>
+  </div>
+</div>
+
+<!-- ═══ TRUST STRIP ═══ -->
+<div class="trust-strip">
+  <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Built specifically for African job seekers</div>
+  <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Real results from Zimbabwe, Zambia, South Africa</div>
+  <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Get your score in 60 seconds</div>
+</div>
+
+<!-- ═══ TOOL ═══ -->
+<div class="wrapper">
+
+  <!-- STEP 1: Education/Background -->
+  <div class="step active" id="s1">
+    <div class="progress-track"><div class="prog-seg done"></div><div class="prog-seg"></div><div class="prog-seg"></div><div class="prog-seg"></div><div class="prog-seg"></div></div>
+    <div class="q-label">Step 1 of 5: Your Background</div>
+    <div class="q-title">Where are you starting from?</div>
+    <div class="q-sub">Be honest, this helps us give you the most accurate assessment. No wrong answers here.</div>
+    <div class="cards" id="bgCards">
+      <div class="card" data-bg="matric">
+        <div class="card-check">✓</div>
+        <div class="card-top"><div class="card-emoji">🎓</div><div class="card-title">I just finished High School (Matric / O-Levels / A-Levels)</div></div>
+        <div class="card-desc">I haven't been to university. I want to build a career from where I am.</div>
+      </div>
+      <div class="card" data-bg="graduate">
+        <div class="card-check">✓</div>
+        <div class="card-top"><div class="card-emoji">🏛️</div><div class="card-title">I just graduated from University</div></div>
+        <div class="card-desc">I have a degree but I'm struggling to find a job that matches my qualifications.</div>
+      </div>
+      <div class="card" data-bg="working">
+        <div class="card-check">✓</div>
+        <div class="card-top"><div class="card-emoji">💼</div><div class="card-title">I have work experience (corporate or otherwise)</div></div>
+        <div class="card-desc">I've been working, maybe in an office, maybe not, and I want to transition to remote.</div>
+      </div>
+      <div class="card" data-bg="stuck">
+        <div class="card-check">✓</div>
+        <div class="card-top"><div class="card-emoji">😩</div><div class="card-title">I've been job hunting for months with no luck</div></div>
+        <div class="card-desc">I've sent dozens of applications. Nothing is working. I don't know what I'm doing wrong.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Career Goal -->
+  <div class="step" id="s2">
+    <div class="progress-track"><div class="prog-seg done"></div><div class="prog-seg done"></div><div class="prog-seg"></div><div class="prog-seg"></div><div class="prog-seg"></div></div>
+    <div class="q-label">Step 2 of 5: Your Goal</div>
+    <div class="q-title">What do you want to achieve?</div>
+    <div class="q-sub">This determines which path we assess you on. Pick the one that excites you most.</div>
+    <div class="cards" id="goalCards">
+      <div class="card" data-goal="va">
+        <div class="card-check">✓</div>
+        <div class="card-top"><div class="card-emoji">🌐</div><div class="card-title">Start a Virtual Assistant career</div></div>
+        <div class="card-desc">Work remotely, earn in USD, support international clients from anywhere in Africa.</div>
+      </div>
+      <div class="card" data-goal="remote">
+        <div class="card-check">✓</div>
+        <div class="card-top"><div class="card-emoji">🏠</div><div class="card-title">Find fully remote work (any industry)</div></div>
+        <div class="card-desc">Customer service, admin, marketing, finance, any remote opportunity that pays well.</div>
+      </div>
+      <div class="card" data-goal="switch">
+        <div class="card-check">✓</div>
+        <div class="card-top"><div class="card-emoji">🔄</div><div class="card-title">Switch my career to remote work</div></div>
+        <div class="card-desc">I already have experience. I just need to reposition myself for remote opportunities.</div>
+      </div>
+      <div class="card" data-goal="general">
+        <div class="card-check">✓</div>
+        <div class="card-top"><div class="card-emoji">📄</div><div class="card-title">Fix my job hunting, I'm getting zero responses</div></div>
+        <div class="card-desc">I don't care about the role type. I just need my CV and applications to actually work.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Challenges -->
+  <div class="step" id="s3">
+    <div class="progress-track"><div class="prog-seg done"></div><div class="prog-seg done"></div><div class="prog-seg done"></div><div class="prog-seg"></div><div class="prog-seg"></div></div>
+    <div class="q-label">Step 3 of 5: Your Challenges</div>
+    <div class="q-title">What's holding you back right now?</div>
+    <div class="q-sub">Select everything that applies. The more honest you are, the better your results.</div>
+    <div class="checks" id="challengeChecks">
+      <label class="chk-label"><input type="checkbox" value="no-cv"><div class="chk-box">✓</div><span class="chk-txt">I don't have a CV or mine is outdated</span></label>
+      <label class="chk-label"><input type="checkbox" value="no-portfolio"><div class="chk-box">✓</div><span class="chk-txt">I don't have a professional portfolio</span></label>
+      <label class="chk-label"><input type="checkbox" value="no-linkedin"><div class="chk-box">✓</div><span class="chk-txt">My LinkedIn is incomplete or I don't have one</span></label>
+      <label class="chk-label"><input type="checkbox" value="no-experience"><div class="chk-box">✓</div><span class="chk-txt">I have no formal/corporate work experience</span></label>
+      <label class="chk-label"><input type="checkbox" value="ghosted"><div class="chk-box">✓</div><span class="chk-txt">I send applications but get ghosted every time</span></label>
+      <label class="chk-label"><input type="checkbox" value="interviews-fail"><div class="chk-box">✓</div><span class="chk-txt">I get interviews but can't convert them to offers</span></label>
+      <label class="chk-label"><input type="checkbox" value="dont-know-tools"><div class="chk-box">✓</div><span class="chk-txt">I don't know what tools remote employers use</span></label>
+      <label class="chk-label"><input type="checkbox" value="africa-bias"><div class="chk-box">✓</div><span class="chk-txt">I feel like being African works against me in hiring</span></label>
+      <label class="chk-label"><input type="checkbox" value="overwhelmed"><div class="chk-box">✓</div><span class="chk-txt">I'm overwhelmed and don't know where to start</span></label>
+    </div>
+    <button class="btn btn-gold" onclick="goToStep4()">Continue →</button>
+  </div>
+
+  <!-- STEP 4: Upload CV -->
+  <div class="step" id="s4">
+    <div class="progress-track"><div class="prog-seg done"></div><div class="prog-seg done"></div><div class="prog-seg done"></div><div class="prog-seg done"></div><div class="prog-seg"></div></div>
+    <div class="q-label">Step 4 of 5: CV Upload</div>
+    <div class="q-title">Upload your CV (optional but recommended)</div>
+    <div class="q-sub">We use your CV alongside your answers to build your full competitiveness report. Don't have a CV yet? No problem, we'll still assess your readiness and show you exactly what's missing.</div>
+
+    <div class="upload-zone" id="dropZone" onclick="document.getElementById('cvInput').click()">
+      <div class="upload-icon">📄</div>
+      <h3>Click to upload your CV</h3>
+      <p>PDF or Word (.docx), Max 5MB</p>
+      <input type="file" id="cvInput" accept=".pdf,.doc,.docx">
+    </div>
+    <div class="file-badge" id="fileBadge">✓ <span id="fName"></span> uploaded</div>
+
+    <div class="mt24">
+      <div class="field"><label>Your Name</label><input type="text" id="inName" placeholder="e.g. Thandi Moyo"></div>
+      <div class="field"><label>Your Email</label><input type="email" id="inEmail" placeholder="e.g. thandi.moyo@gmail.com"></div>
+    </div>
+
+    <button class="btn btn-gold" id="analyzeBtn" disabled onclick="startAnalysis()">Analyze My Competitiveness</button>
+  </div>
+
+  <!-- STEP 5: Analyzing -->
+  <div class="step" id="s5">
+    <div class="analyze-screen">
+      <div class="spinner"></div>
+      <h2>Analysing your global competitiveness…</h2>
+      <p id="aText">Reviewing your background…</p>
+      <div class="a-bar"><div class="a-fill" id="aFill"></div></div>
+    </div>
+  </div>
+
+  <!-- STEP 6: RESULTS -->
+  <div class="step" id="s6">
+    <div class="progress-track"><div class="prog-seg done"></div><div class="prog-seg done"></div><div class="prog-seg done"></div><div class="prog-seg done"></div><div class="prog-seg done"></div></div>
+
+    <!-- Score Hero -->
+    <div class="score-hero">
+      <h3>Your Global Competitiveness Score</h3>
+      <div class="score-num" id="rScore">0<span>/ 100</span></div>
+      <div class="score-verdict" id="rVerdict"></div>
+    </div>
+
+    <!-- Section Breakdown -->
+    <div class="section-scores">
+      <h4>Breakdown by Category</h4>
+      <div id="sBreakdown"></div>
+    </div>
+
+    <!-- Issues -->
+    <div class="issues-list">
+      <h4>Issues Affecting Your Competitiveness</h4>
+      <div id="iList"></div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials">
+      <h4>✨ Real Results from Africans Using This System</h4>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <div class="testimonial-text">
+            "I had ZERO remote work experience. Used the ATS CV template from the system, followed the customization notes, and applied on the platform recommended. Got my first remote job offer in 6 weeks. The system works if you follow it."
+          </div>
+          <div class="testimonial-author">Success Story <span class="testimonial-location">🇿🇼 Zimbabwe</span></div>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-text">
+            "I used the ATS CV templates, applied for a position on the recommended platform, and landed an interview within 3 weeks. Before this, I was getting zero responses. The difference? The CV structure and keywords."
+          </div>
+          <div class="testimonial-author">Remote Job Seeker <span class="testimonial-location">🇿🇼 Zimbabwe</span></div>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-text">
+            "I follow the system and get headhunted regularly now. LinkedIn positioning + ATS optimization changed everything. The investment was less than one day's VA work but the returns are continuous."
+          </div>
+          <div class="testimonial-author">Angela M., Creator <span class="testimonial-location">🇿🇼 Zimbabwe</span></div>
+        </div>
+      </div>
+      <div class="tiktok-cta">
+        <p><strong>Want more proof?</strong> Watch live testimonials and success stories from users across Africa.</p>
+        <a href="https://www.tiktok.com/@angieeglobal" target="_blank" class="tiktok-btn">📱 See More Testimonials on TikTok</a>
+      </div>
+    </div>
+
+    <!-- Tailored Upsells -->
+    <div class="upsell-section">
+      <h4>Your Personalised Action Plan</h4>
+      <p>Based on your background, goals, and challenges, here's exactly what you need to become globally competitive.</p>
+      <div id="upsells"></div>
+    </div>
+
+    <!-- Lead Magnet -->
+    <div class="leadmagnet">
+      <h5>🎁 Not ready to invest yet? Start here.</h5>
+      <p>Get our free email guide: <strong>"The 7 Reasons Your CV Is Being Auto-Rejected (And How to Fix Them)"</strong>, straight to your inbox.</p>
+      <input type="email" id="lmEmail" placeholder="Enter your email">
+      <button class="btn-buy outline" onclick="submitLM()">Send Me The Free Guide</button>
+    </div>
+
+    <button class="btn btn-outline mt16" onclick="location.reload()">← Start Over</button>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  © 2026 Angiee Global · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1f7976717b7671783168706d74317e7d6d707e7b5f78727e7673317c7072">[email&#160;protected]</a><br>
+  Helping Africans compete, qualify, and win global remote roles.<br>
+  🇿🇼 Zimbabwe: Email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="97f1fef9f3fef9f0b9e0f8e5fcb9f6f5e5f8f6f3d7f0faf6fefbb9f4f8fa">[email&#160;protected]</a> for Ecocash payments
+</div>
+
+<!-- ═══ SCRIPT ═══ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ─── STATE ───
+const state = {
+  bg: '',
+  goal: '',
+  challenges: [],
+  hasCV: false,
+  name: '',
+  email: ''
+};
+
+// ─── NAVIGATION ───
+function goToStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ─── STEP 1: Background (with event listeners) ───
+document.querySelectorAll('#bgCards .card').forEach(card => {
+  card.addEventListener('click', function() {
+    document.querySelectorAll('#bgCards .card').forEach(c => c.classList.remove('sel'));
+    this.classList.add('sel');
+    state.bg = this.dataset.bg;
+    setTimeout(() => goToStep(2), 420);
+  });
+});
+
+// ─── STEP 2: Goal (with event listeners) ───
+document.querySelectorAll('#goalCards .card').forEach(card => {
+  card.addEventListener('click', function() {
+    document.querySelectorAll('#goalCards .card').forEach(c => c.classList.remove('sel'));
+    this.classList.add('sel');
+    state.goal = this.dataset.goal;
+    setTimeout(() => goToStep(3), 420);
+  });
+});
+
+// ─── STEP 3: Challenges ───
+function goToStep4() {
+  state.challenges = [];
+  document.querySelectorAll('#challengeChecks input:checked').forEach(cb => {
+    state.challenges.push(cb.value);
+  });
+  goToStep(4);
+}
+
+// ─── STEP 4: Upload & Form ───
+const cvInput = document.getElementById('cvInput');
+const inName = document.getElementById('inName');
+const inEmail = document.getElementById('inEmail');
+const analyzeBtn = document.getElementById('analyzeBtn');
+
+cvInput.addEventListener('change', function(e) {
+  if(e.target.files[0]) {
+    const file = e.target.files[0];
+    if(file.size > 5*1024*1024) { alert('File too large, max 5MB.'); return; }
+    state.hasCV = true;
+    document.getElementById('fName').textContent = file.name;
+    document.getElementById('fileBadge').style.display = 'block';
+    checkReady();
+  }
+});
+
+inName.addEventListener('input', checkReady);
+inEmail.addEventListener('input', checkReady);
+
+function checkReady() {
+  state.name = inName.value.trim();
+  state.email = inEmail.value.trim();
+  analyzeBtn.disabled = !(state.name && state.email && state.email.includes('@'));
+}
+
+// ─── STEP 5: Analysis ───
+async function startAnalysis() {
+  goToStep(5);
+  const msgs = [
+    'Reviewing your background…',
+    'Checking ATS compatibility…',
+    'Evaluating remote work readiness…',
+    'Checking global positioning…',
+    'Calculating competitiveness score…'
+  ];
+  
+  for(let i=0; i<msgs.length; i++) {
+    document.getElementById('aText').textContent = msgs[i];
+    document.getElementById('aFill').style.width = ((i+1)/msgs.length*100)+'%';
+    await new Promise(r => setTimeout(r, 700));
+  }
+  
+  await new Promise(r => setTimeout(r, 600));
+  buildResults();
+  goToStep(6);
+}
+
+// ─── STEP 6: BUILD RESULTS ───
+function buildResults() {
+  const hasCV = state.hasCV;
+  let base = hasCV ? 38 : 22;
+  if(state.challenges.length >= 3) base += 5;
+  const score = Math.min(base + Math.floor(Math.random()*12), 68);
+
+  document.getElementById('rScore').innerHTML = score + '<span>/ 100</span>';
+
+  // Verdict
+  let verdict = '';
+  if(score < 40) verdict = '⚠️ You are not yet globally competitive. The good news? This is fixable, and we know exactly how. Most Africans start here. It just means no one has shown you the right system yet.';
+  else if(score < 55) verdict = '⚠️ You have potential but significant gaps are costing you opportunities right now. Employers are seeing your CV and clicking "next." Let\'s fix that.';
+  else verdict = '⚡ You\'re closer than you think, but a few critical gaps are still holding you back from landing the roles you deserve.';
+  document.getElementById('rVerdict').textContent = verdict;
+
+  // Section Scores
+  const sections = [
+    { icon:'📄', label:'CV & Application Readiness', score: hasCV ? score - 4 : 8 },
+    { icon:'🌐', label:'Remote Work Readiness', score: state.challenges.includes('dont-know-tools') ? 18 : score - 8 },
+    { icon:'👤', label:'Professional Positioning', score: state.challenges.includes('no-linkedin') ? 15 : score - 10 },
+    { icon:'📂', label:'Portfolio & Evidence', score: state.challenges.includes('no-portfolio') ? 10 : score - 6 },
+    { icon:'🎯', label:'LinkedIn Visibility', score: state.challenges.includes('no-linkedin') ? 12 : score - 12 }
+  ];
+  
+  let sHTML = '';
+  sections.forEach(s => {
+    const pct = Math.max(s.score, 5);
+    const cls = pct < 30 ? 'bad' : pct < 55 ? 'ok' : 'good';
+    sHTML += `<div class="s-row">
+      <div class="s-icon">${s.icon}</div>
+      <div class="s-label">${s.label}</div>
+      <div class="s-bar-wrap"><div class="s-bar"><div class="s-fill ${cls}" style="width:${pct}%"></div></div></div>
+      <div class="s-pct ${cls}">${pct}%</div>
+    </div>`;
+  });
+  document.getElementById('sBreakdown').innerHTML = sHTML;
+
+  // Issues
+  const issues = [];
+
+  // Confirmed issues
+  if(state.challenges.includes('no-linkedin')) {
+    issues.push({ title:'🔗 No LinkedIn Profile', desc:'You told us your LinkedIn is incomplete or missing. This is one of the biggest gaps for global roles, remote employers check LinkedIn before anything else. Without it, you\'re invisible.', confirmed: true });
+  }
+  if(state.challenges.includes('no-portfolio')) {
+    issues.push({ title:'📂 No Portfolio or Proof of Work', desc:'You told us you don\'t have a portfolio. For remote roles this isn\'t optional, it\'s expected. Without one, you\'re asking employers to trust you blindly. That\'s not how global hiring works.', confirmed: true });
+  }
+  if(state.challenges.includes('no-cv')) {
+    issues.push({ title:'📄 No CV or Outdated CV', desc:'You told us your CV is missing or outdated. This is your first impression with every employer. Without a current, ATS-ready CV, your application doesn\'t even get a second look.', confirmed: true });
+  }
+  if(state.challenges.includes('no-experience')) {
+    issues.push({ title:'💼 No Formal Work Experience Listed', desc:'You told us you don\'t have corporate experience. The good news? Employers don\'t need a long work history, they need to see transferable skills. But you need to know how to present them correctly.', confirmed: true });
+  }
+  if(state.challenges.includes('dont-know-tools')) {
+    issues.push({ title:'🛠️ Unfamiliar With Remote Work Tools', desc:'You told us you don\'t know the tools remote employers use. Google Workspace, Slack, Asana, these are expected from day one. Not knowing them puts you behind before you even apply.', confirmed: true });
+  }
+  if(!hasCV) {
+    issues.push({ title:'📄 No CV Uploaded', desc:'You didn\'t upload a CV. We can\'t do a full compatibility check without one, but based on your answers, there are already several gaps we\'ve flagged below.', confirmed: true });
+  }
+
+  // Common issues (only if CV uploaded)
+  if(hasCV) {
+    const commonIssues = [
+      { title:'🚫 ATS-Blocking Personal Details', desc:'Common issues at this stage are ATS-related: Personal details like Date of Birth, marital status, gender, driver\'s licence, photo, and reference lists on your CV trigger automatic rejections. International ATS systems filter these out or score them lower. Remove all personal details except name, phone, email, and location (city/country only).', confirmed: false },
+      { title:'📄 One Generic PDF for Every Job', desc:'Most people at this stage use one generic PDF CV to apply to different jobs. This is killing your applications. You need a Word ATS-optimized master CV template that you tailor per job description, updating keywords, skills, and achievements to match each role. PDF files also don\'t parse well in many ATS systems.', confirmed: false },
+      { title:'📊 Duties vs. Achievements', desc:'The most common mistake we see: listing what you did instead of what you achieved. "Managed social media" tells employers nothing. "Grew Instagram followers by 340% in 4 months" gets interviews. Every bullet point needs a number or outcome.', confirmed: false },
+      { title:'🗂️ Two-Column & Infographic CVs', desc:'Two-column layouts and infographic-style CVs look impressive but many ATS systems can\'t read them correctly. Your CV may be getting rejected by software before a human ever sees it. Use simple, single-column layouts with clear section headings.', confirmed: false }
+    ];
+    const count = (state.bg === 'matric' || state.bg === 'graduate') ? 4 : 3;
+    commonIssues.slice(0, count).forEach(i => issues.push(i));
+  }
+
+  // Render issues
+  const confirmed = issues.filter(i => i.confirmed);
+  const common = issues.filter(i => !i.confirmed);
+
+  let iHTML = '';
+  if(confirmed.length) {
+    iHTML += '<div style="margin-bottom:6px;"><span style="font-size:12px;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:.8px;">⚠ Confirmed from your answers</span></div>';
+    confirmed.forEach(i => { iHTML += `<div class="issue"><h5>${i.title}</h5><p>${i.desc}</p></div>`; });
+  }
+  if(common.length) {
+    iHTML += '<div style="margin-top:20px;margin-bottom:6px;"><span style="font-size:12px;font-weight:600;color:var(--amber);text-transform:uppercase;letter-spacing:.8px;">📋 Common issues at your stage, check your CV</span></div>';
+    common.forEach(i => { iHTML += `<div class="issue" style="border-left-color:var(--amber);background:var(--amber-bg);"><h5 style="color:var(--amber)">${i.title}</h5><p>${i.desc}</p></div>`; });
+  }
+  document.getElementById('iList').innerHTML = iHTML;
+
+  // Upsells
+  let uHTML = `<div class="upsell featured">
+    <div class="upsell-badge">⭐ Recommended For You</div>
+    <div class="upsell-body">
+      <h5>The African VA Career Starter System</h5>
+      <div class="why">You scored ${score}/100. Based on your answers, here's what will close your gaps: the complete system that takes you from "I want remote work" to "I just got my first interview", in 30 days.</div>
+      <ul class="upsell-features">
+        <li><strong>13 Complete Resources</strong>, Everything from foundations to interview prep</li>
+        <li><strong>Module 1:</strong> Remote work foundations (equipment, payments, tools, 30-day action plan)</li>
+        <li><strong>Module 2:</strong> Build Your Portfolio Guide + LinkedIn Positioning Strategy</li>
+        <li><strong>Module 3:</strong> 3 ATS CV Templates + 2 Cover Letter Templates + Real Examples</li>
+        <li><strong>Module 4:</strong> AI Application Kit (20+ ChatGPT prompts for CVs, interviews, negotiation)</li>
+        <li><strong>Module 5:</strong> Interview Prep Framework + Upwork Client Acquisition Guide</li>
+        <li><strong>Why Africans Are Rejected</strong>, The 3 real reasons + exact fixes from hiring managers</li>
+        <li><strong>Task Tracker</strong>, Daily progress tracking so you never lose momentum</li>
+      </ul>
+      <div style="background:var(--cream);padding:14px;border-radius:8px;margin:16px 0;border-left:3px solid var(--gold);">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:8px;"><strong>What This System Does:</strong></div>
+        <div style="font-size:13px;color:var(--text);line-height:1.6;">
+          ✓ Works for VAs, customer support, admin roles, project coordinators, ANY remote work<br>
+          ✓ Built specifically for Africans (loadshedding, Payoneer, geographic bias addressed)<br>
+          ✓ Honest about limitations, no "get rich quick" promises<br>
+          ✓ Modular approach, focus on what YOU need (beginners start at foundations, experienced focus on positioning)
+        </div>
+      </div>
+      <div style="background:var(--red-bg);padding:12px;border-radius:8px;margin:16px 0;">
+        <div style="font-size:12px;color:var(--red);line-height:1.5;"><strong>⚠️ Important Disclaimer:</strong> This system gives you the complete roadmap and all the tools, but landing a job requires YOUR consistent effort. No employment is guaranteed, your results depend on following the 30-day action plan, applying to 10-15 jobs weekly, and implementing the strategies. Most people see their first interviews within 30-60 days when they follow the system step-by-step.</div>
+      </div>
+      <div style="background:var(--green-bg);padding:14px;border-radius:8px;margin:16px 0;border:2px solid var(--green);">
+        <div style="font-size:13px;color:var(--green);margin-bottom:8px;"><strong>✅ 60-Day Results Guarantee:</strong></div>
+        <div style="font-size:12px;color:var(--text);line-height:1.6;">
+          Follow the system for 60 days. If you complete the 30-day action plan, apply to 20+ jobs, and don't land at least 3 interviews, send us proof (your task tracker + applications) and we'll personally review your CV and give you a 30-minute feedback session FREE. We're that confident this works.
+        </div>
+      </div>
+      <div class="upsell-price">
+        <div class="price-now">$27</div>
+        <div class="price-old">$99</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:6px;">Less than 1 hour of VA work. Value if purchased separately: $206</div>
+      </div>
+      <div style="text-align:center;margin-bottom:14px;">
+        <div style="font-size:12px;color:var(--green);font-weight:600;">✓ 2 users got offers with zero experience</div>
+        <div style="font-size:12px;color:var(--green);font-weight:600;">✓ 4+ currently implementing across Zimbabwe, Zambia, South Africa</div>
+      </div>
+      <button class="btn-buy gold" onclick="window.location.href='mailto:angiee.global@gmail.com?subject=VA Career Starter System - ${encodeURIComponent(state.name)}&body=Hi Angiee Global,%0D%0A%0D%0AI want to purchase the African VA Career Starter System ($27).%0D%0A%0D%0AMy Name: ${encodeURIComponent(state.name)}%0D%0AMy Email: ${encodeURIComponent(state.email)}%0D%0A%0D%0APlease send payment details.%0D%0A%0D%0AThank you!'">Get The Complete System, $27</button>
+      <div style="text-align:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+        <div style="font-size:13px;color:var(--text);margin-bottom:8px;"><strong>🇿🇼 Zimbabwe Payment Option:</strong></div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;">
+          Ecocash accepted. Email <strong style="color:var(--gold);">angiee.global@gmail.com</strong> for payment details.
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  // Secondary option
+  uHTML += `<div class="upsell">
+    <div class="upsell-body">
+      <h5>ATS CV Template Package</h5>
+      <div class="why">Just need templates? Get professional, ATS-optimized CV and cover letter templates you can use immediately, no system, no guides, just plug-and-play.</div>
+      <ul class="upsell-features">
+        <li>3 ATS-optimized CV templates (Word format)</li>
+        <li>2 Cover letter templates with customization notes</li>
+        <li>Real filled examples showing exactly how it's done</li>
+        <li>Instant download, use today</li>
+      </ul>
+      <div style="background:var(--amber-bg);padding:10px;border-radius:6px;margin:12px 0;">
+        <div style="font-size:12px;color:var(--amber);"><strong>💡 Note:</strong> This is templates only. If you need the full system (portfolio guide, LinkedIn strategy, interview prep, payment platforms), get the Complete System above for just $12 more.</div>
+      </div>
+      <div class="upsell-price"><div class="price-now">$14.99</div></div>
+      <button class="btn-buy outline" onclick="window.location.href='mailto:angiee.global@gmail.com?subject=ATS Template Package - ${encodeURIComponent(state.name)}&body=Hi Angiee Global,%0D%0A%0D%0AI want to purchase the ATS CV Template Package ($14.99).%0D%0A%0D%0AMy Name: ${encodeURIComponent(state.name)}%0D%0AMy Email: ${encodeURIComponent(state.email)}%0D%0A%0D%0APlease send payment details.%0D%0A%0D%0AThank you!'">Get Templates Only, $14.99</button>
+    </div>
+  </div>`;
+
+  document.getElementById('upsells').innerHTML = uHTML;
+}
+
+// ─── LEAD MAGNET ───
+function submitLM() {
+  const e =
