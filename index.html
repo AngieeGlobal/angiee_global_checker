@@ -441,19 +441,48 @@ body {
 .btn-buy.outline { background:transparent; border:2px solid var(--slate); color:var(--slate); }
 .btn-buy.outline:hover { background:var(--slate); color:#fff; }
 
-/* ─── FREE LEADMAGNET ─── */
-.leadmagnet {
-  background:var(--amber-bg); border:1px solid var(--amber);
-  border-radius:12px; padding:20px; margin-top:24px;
+/* ─── NEW CTA SECTION ─── */
+.cta-section {
+  margin-top: 30px;
+  padding: 25px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.leadmagnet h5 { color:var(--amber); font-size:15px; margin-bottom:6px; }
-.leadmagnet p { color:var(--muted); font-size:13px; margin-bottom:12px; }
-.leadmagnet input {
-  width:100%; padding:10px 14px;
-  border:1px solid var(--border); border-radius:8px;
-  font-size:14px; margin-bottom:10px; font-family:inherit;
+.cta-section a {
+  display: inline-block;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  margin: 10px 5px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-.leadmagnet input:focus { outline:none; border-color:var(--amber); }
+.cta-section a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Mobile responsiveness for CTA */
+@media (max-width: 600px) {
+  .cta-section {
+    padding: 20px 15px !important;
+  }
+  .cta-section h3 {
+    font-size: 20px !important;
+  }
+  .cta-section p {
+    font-size: 14px !important;
+  }
+  .cta-section a {
+    display: block !important;
+    width: 90% !important;
+    margin: 10px auto !important;
+    padding: 15px 20px !important;
+    font-size: 15px !important;
+  }
+}
 
 /* ─── SELAR STORE LINK ─── */
 .store-link {
@@ -740,19 +769,56 @@ body {
       <div id="upsells"></div>
     </div>
 
+    <!-- NEW CTA SECTION (FREE GUIDE + LINKEDIN + SYSTEM) -->
+    <div class="cta-section">
+      <h3 style="color: #0A1B2F; margin-bottom: 15px; font-size: 24px;">Want to Fix These Issues?</h3>
+      
+      <p style="color: #666; margin-bottom: 20px; font-size: 16px; line-height: 1.6;">
+        Download our free guide: <strong>"Why Africans Are Rejected for Remote Roles (And Exactly How to Fix It)"</strong>
+      </p>
+      
+      <!-- Download Free Guide Button -->
+      <a href="https://selar.com/834m1821xv" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         style="display: inline-block; background: #D4AF37; color: #0A1B2F; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-bottom: 20px; font-size: 16px;">
+        📄 Download Free Guide
+      </a>
+      
+      <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
+      
+      <!-- Follow Us Section -->
+      <p style="color: #666; margin-bottom: 15px; font-size: 16px;">
+        <strong>Follow us on LinkedIn for weekly strategies:</strong>
+      </p>
+      
+      <a href="https://www.linkedin.com/company/angiee-global" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         style="display: inline-block; background: #0A66C2; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-bottom: 20px; font-size: 16px;">
+        🔗 Follow Angiee Global on LinkedIn
+      </a>
+      
+      <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
+      
+      <!-- Full System CTA -->
+      <p style="color: #666; margin-bottom: 15px; font-size: 16px;">
+        Ready for the full positioning system?
+      </p>
+      
+      <a href="https://selar.co/m/angiee_global" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         style="display: inline-block; background: #0A1B2F; color: #FFD700; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;">
+        🎯 Get Full CV + LinkedIn System ($27)
+      </a>
+    </div>
+
     <!-- Selar Store Link -->
     <div class="store-link">
       <h5>🛍️ Browse All Our Resources</h5>
       <p>CV templates, job lists, guides, and more available in our store</p>
       <a href="https://selar.com/m/angiee_global" target="_blank">Visit Angiee Global Store →</a>
-    </div>
-
-    <!-- Lead Magnet -->
-    <div class="leadmagnet">
-      <h5>🎁 Not ready to invest yet? Start here.</h5>
-      <p>Get our free email guide: <strong>"The 7 Reasons Your CV Is Being Auto-Rejected (And How to Fix Them)"</strong>, straight to your inbox.</p>
-      <input type="email" id="lmEmail" placeholder="Enter your email">
-      <button class="btn-buy outline" onclick="submitLM()">Send Me The Free Guide</button>
     </div>
 
     <button class="btn btn-outline mt16" onclick="location.reload()">← Start Over</button>
@@ -761,13 +827,13 @@ body {
 
 <!-- ═══ FOOTER ═══ -->
 <div class="footer">
-  © 2026 Angiee Global · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="583e31363c31363f762f372a3376393a2a37393c183f35393134763b3735">[email&#160;protected]</a><br>
+  © 2026 Angiee Global · finding.work.abroad@gmail.com<br>
   Helping Africans compete, qualify, and win global remote roles.<br>
-  🇿🇼 Zimbabwe: Email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ee8887808a878089c099819c85c08f8c9c818f8aae89838f8782c08d8183">[email&#160;protected]</a> for Ecocash payments
+  🇿🇼 Zimbabwe: Email finding.work.abroad@gmail.com for Ecocash payments
 </div>
 
 <!-- ═══ SCRIPT ═══ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // Configure PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -1299,21 +1365,36 @@ function buildUpsells(score, issueCount) {
 
   document.getElementById('upsells').innerHTML = uHTML;
 }
-
-// ─── LEAD MAGNET ───
-function submitLM() {
-  const email = document.getElementById('lmEmail').value.trim();
-  if(!email || !email.includes('@')) {
-    alert('Please enter a valid email address');
-    return;
-  }
-  
-  window.location.href = `mailto:finding.work.abroad@gmail.com?subject=Free Guide Request&body=Please send the free CV rejection guide to: ${encodeURIComponent(email)}`;
-  
-  document.getElementById('lmEmail').value = '';
-  alert('Thank you! Check your email for the free guide.');
-}
 </script>
 
 </body>
 </html>
+```
+
+---
+
+## **✅ WHAT I CHANGED:**
+
+1. **REMOVED:** The old "Lead Magnet" section (lines 1040-1050 in your original code)
+
+2. **ADDED:** New CTA section with 3 buttons:
+   - Download Free Guide (gold button → Selar)
+   - Follow on LinkedIn (blue button → LinkedIn company page)
+   - Get Full System (navy/gold button → Selar store)
+
+3. **PLACEMENT:** Right after the upsells, before the Selar store link
+
+4. **MOBILE RESPONSIVE:** Buttons stack vertically on phones
+
+---
+
+## **🚀 NEXT STEPS:**
+
+1. **Copy the entire code above**
+2. **Replace your current `index.html` file**
+3. **Save**
+4. **Push to GitHub:**
+```
+   git add index.html
+   git commit -m "Updated CTA section with free guide, LinkedIn, and system links"
+   git push
